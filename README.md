@@ -1,5 +1,5 @@
 # System Profiler #
-**System Profiler** is a project that is setup to provide information on the user's system and browser via client-side script/access.
+**System Profiler** is a project that is setup to provide information on the user's system and browser via client-side script/access. This is done through simple HTML and JavaScript commands.
 
 ---
 
@@ -18,5 +18,8 @@ You can add your email address to the end of the URL and when the user clicks th
     
     www.yourdomain.com/folderForSystemProfiler/?x=youremailaddress@domainprovider.com
 
-## License ##
+### Global IP Retrieval ###
+The only reason you will need to use the SHTML file type is when you are wanting to retrieve the the Global IP address. The Global IP address only provides an IP address of the network that the user is on. This is not an IP to their specific device/system.
+
+## License / Copyright Notice ##
 *&copy; Copyright 2012 Bill Strahlend. All rights reserved.*
