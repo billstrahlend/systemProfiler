@@ -10,7 +10,9 @@ The *System Profiler* can be used for troubleshooting purposes when a user is ex
 You can send the URL of the *System Profiler* to the user. When they click on the link, the *HTML* page will generate the user's data. At the top of the page a button is provided labeled as *Send Data*. Once the user clicks on this, using the user's email client a new email is created with the user's data in the body of the email. All they need to do is click send.
 
 ### Adding Your Email Address ###
-You can add your email address to the end of the URL and when the user clicks the *Send Data* button, your email address will populate in the *To* field. To auto-populate your email address, simply add the following to the end of the URL for the tool: *?x=youremailaddress@domainprovider.com*.
+You can add your email address to the end of the URL and when the user clicks the *Send Data* button, your email address will populate in the *To* field. To auto-populate your email address, simply add the following to the end of the URL for the tool:
+
+    ?x=youremailaddress@domainprovider.com
 
 *For Example:*
     
