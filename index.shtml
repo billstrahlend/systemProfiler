@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>System Configuration File</title>
+    <script type="text/javascript" src="scripts/js/includes.js"></script>
+    <style>
+        body {font-family: Verdana; font-size: 10pt; margin: 60px 60px 60px 60px;}
+        td {vertical-align: text-top; padding: 3px 0px 4px 0px; border-bottom: 1px solid #CCC;}
+        form {position: absolute; margin: 0px auto; top: 10px;}
+    </style>
+    <script>
+        ip = '<!--#echo var="REMOTE_ADDR"-->';
+        var getQueryString = function(q)
+        {
+            var c = window.location.search, s=window.location.search.indexOf(q+'=')+1;
+            return s ? unescape(c.substring(s+=q.length, (c.indexOf('&', s)+1 || c.length+1)-1)) : '';
+        };
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>  IE BROWSER AND WINDOWS OS DETECTION  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        var n, nav, nan, nua, os, browserVersion, ieVersion, cv;
+        n=navigator;
+        nav=n.appVersion;
+        nan=n.appName;
+        nua=n.userAgent;
+        if(nua.indexOf("OS 1")!=-1){os="Apple iOS 1";};
+        if(nua.indexOf("OS 2")!=-1){os="Apple iOS 2";};
+        if(nua.indexOf("OS 3_1_3")!=-1){os="Apple iOS 3.1.3";};
+        if(nua.indexOf("OS 4_2_1")!=-1){os="Apple iOS 4.2.1";};
+        if(nua.indexOf("OS 4_3_1")!=-1){os="Apple iOS 4.3.1";};
+        if(nua.indexOf("OS 4_4_0")!=-1){os="Apple iOS 4.4";};
+        if(nua.indexOf("OS 4_4_1")!=-1){os="Apple iOS 4.4.1";};
+        if(nua.indexOf("OS 4_4_2")!=-1){os="Apple iOS 4.4.2";};
+        if(nua.indexOf("OS 4_4_3")!=-1){os="Apple iOS 4.4.3";};
+        if(nua.indexOf("OS 4_4_4")!=-1){os="Apple iOS 4.4.4";};
+        if(nua.indexOf("OS 5_0_0")!=-1){os="Apple iOS 5.0";};
+        if(nua.indexOf("OS 5_0_1")!=-1){os="Apple iOS 5.0.1";};
+        if(nua.indexOf("Win3.11")!=-1){os="Windows 3.11";};
+        if(nua.indexOf("WinNT3.5")!=-1){os="Windows NT 3.11";};
+        if(nua.indexOf("WinNT4.0")!=-1){os="Windows NT 4.0";};
+        if(nua.indexOf("Win95")!=-1){os="Windows 95";};
+        if(nua.indexOf("Win98")!=-1){os="Windows 98";};
+        if(nua.indexOf("Win 9x 4.90")!=-1){os="Windows Me";};
+        if(nua.indexOf("WindowsCE")!=-1){os="Windows CE";};
+        if(nua.indexOf("Windows NT 5.0")!=-1){os="Windows 2000";};
+        if(nua.indexOf("Windows NT 5.1")!=-1){os="Windows XP";};
+        if(nua.indexOf("Windows NT 5.2")!=-1){os="Windows Server 2003 or Windows XP x64 bit";};// IS IT POSSIBLE TO DISTINGUISH BETWEEN THESE TWO? - MAYBE IF THERE IS A Win64 or WOW64 IN THE USER AGENT (x64 APPLIES ONLY TO THE BROWSER BEING 64bit), THIS COULD BE THE DETERMINING FACTOR - MAYBE.
+        /*
+        WoW64 or WOW64 = Windows 32bit on Windows 64bit.
+            A Windows System running a 64bit OS, but running a 32bit app browser
+            will show up as WOW64 in the userAgent and Win32 on platform
+            
+            A Windows System running a 64bit OS and running a 64bit app browser
+            will show up as Win64 in the userAgent and Win64 on platform
+        */
+        if(nua.indexOf("Windows NT 6.0")!=-1){os="Windows Vista";};
+        if(nua.indexOf("Windows NT 6.1")!=-1){os="Windows 7";};
+        if(nua.indexOf("Mac OS X 10_0")!=-1 || nua.indexOf("Mac OS X 10.0")!=-1){os="Mac OS X v10.0 (Cheetah)";};
+        if(nua.indexOf("Mac OS X 10_1")!=-1 || nua.indexOf("Mac OS X 10.1")!=-1){os="Mac OS X v10.1 (Puma)";};
+        if(nua.indexOf("Mac OS X 10_2")!=-1 || nua.indexOf("Mac OS X 10.2")!=-1){os="Mac OS X v10.2 (Jaguar)";};
+        if(nua.indexOf("Mac OS X 10_3")!=-1 || nua.indexOf("Mac OS X 10.3")!=-1){os="Mac OS X v10.3 (Panther)";};
+        if(nua.indexOf("Mac OS X 10_4")!=-1 || nua.indexOf("Mac OS X 10.4")!=-1){os="Mac OS X v10.4 (Tiger)";};
+        if(nua.indexOf("Mac OS X 10_5")!=-1 || nua.indexOf("Mac OS X 10.5")!=-1){os="Mac OS X v10.5 (Leopard)";};
+        if(nua.indexOf("Mac OS X 10_6")!=-1 || nua.indexOf("Mac OS X 10.6")!=-1){os="Mac OS X v10.6 (Snow Leopard)";};
+        if(nua.indexOf("Mac OS X 10_7")!=-1 || nua.indexOf("Mac OS X 10.7")!=-1){os="Mac OS X v10.7 (Lion)";};
+        if(nua.indexOf("Mac OS X 10_8")!=-1 || nua.indexOf("Mac OS X 10.8")!=-1){os="Mac OS X v10.8 (Mountain Lion)";};
+        
+        if(nua.indexOf("MSIE 5")!=-1){ieVersion="Internet Explorer 5";};
+        if(nua.indexOf("MSIE 6")!=-1){ieVersion="Internet Explorer 6";};
+        if(nua.indexOf("MSIE 7")!=-1){ieVersion="Internet Explorer 7";};
+        if(nua.indexOf("MSIE 8")!=-1){ieVersion="Internet Explorer 8";};
+        if(nua.indexOf("MSIE 9")!=-1){ieVersion="Internet Explorer 9";};
+        /*
+            THE CODE BELOW DETECTS FOR IE 64bit BROWSER. STILL NEED TO FIGURE OUT PROPER DETECTION
+            FOR BOTH STANDARD MODE AND COMPATIBILITY MODE
+                **** MAYBE DETECT FOR 64bit FIRST, THEN...
+                **** OR MAYBE NESTED IF/THEN/ELSE STATEMENTS
+                **** For Nested IF/THEN/ELSE Statements, we should probably start
+                **** with IEversion, 64bit, then Trident - MAYBE
+        */
+        /*
+        if(nua.indexOf("Trident/4.0")!=-1)
+        {
+            if(nua.indexOf("MSIE 8")!=-1)
+            {
+                if(nua.indexOf("x64")!=-1){ieVersion="Internet Explorer 8 [64bit]";}
+                else{ieVersion="Internet Explorer 8";}
+            };
+            if(nua.indexOf("MSIE 7")!=-1)
+            {
+                if(nua.indexOf("x64")!=-1)
+                {cv=true;browserVersion="Internet Explorer 8 [64bit]";}
+                else{cv=true;browserVersion="Internet Explorer 8";}
+            };
+        };
+        if(nua.indexOf("Trident/5.0")!=-1)
+        {
+            if(nua.indexOf("MSIE 9")!=-1)
+            {
+                if(nua.indexOf("x64")!=-1){ieVersion="Internet Explorer 9 [64bit]";}
+                else{ieVersion="Internet Explorer 9";}
+            };
+            if(nua.indexOf("MSIE 7")!=-1)
+            {
+                if(nua.indexOf("x64")!=-1)
+                {cv=true;browserVersion="Internet Explorer 9 [64bit]";}
+                else{cv=true;browserVersion="Internet Explorer 9";}
+            };
+        };
+        */
+        if(nua.indexOf("Trident/4.0")!=-1 && nua.indexOf("MSIE 7")!=-1){cv=true; browserVersion="Internet Explorer 8";};
+        if(nua.indexOf("Trident/5.0")!=-1 && nua.indexOf("MSIE 7")!=-1){cv=true; browserVersion="Internet Explorer 9";};
+        
+        if(nua.indexOf("Trident/4.0")!=-1 && ieVersion!="Internet Explorer 8"){cv=true; browserVersion="Internet Explorer 8";};
+        if(nua.indexOf("Trident/5.0")!=-1 && ieVersion!="Internet Explorer 9"){cv=true; browserVersion="Internet Explorer 9";};
+        
+        opera=(nua.indexOf('Opera')!=-1);
+        safari=(nua.indexOf('Safari')!=-1);
+        chrome=(nua.indexOf('Chrome')!=-1);
+        firefox=(nua.indexOf('Firefox')!=-1);
+        if(safari && n.platform.indexOf("Mac")!=-1){string_pos=nua.indexOf("Safari");nu=nua.substr((string_pos-6),6);browserVersion="Safari "+nu;};
+        if(safari && !(n.platform.indexOf("Mac")!=-1) && !(nua.indexOf("Android")!=-1)){string_pos=nua.indexOf("Version");nu=nua.substr((string_pos+8),3);browserVersion="Safari "+nu+" (via iOS)";};
+        if(chrome){string_pos=nua.indexOf("Chrome");nu=nua.substr((string_pos+7),12);browserVersion="Chrome "+nu;};
+        if(opera){string_pos=nua.indexOf("Version");nu=nua.substr((string_pos+8),6);browserVersion="Opera "+nu;};
+        if(firefox){string_pos=nua.indexOf("Firefox");nu=nua.substr((string_pos+8),6);browserVersion="Firefox "+nu;};
+        
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>  IE BROWSER AND WINDOWS OS DETECTION  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        var goodInstall = "<span style='color:#0A0;'>Installed</span>";
+        var badInstall = "<span style='color:#D00;'>Installed</span>";
+        var goodNotInstalled = "<span style='color:#0A0;'>Not Installed</span>";
+        var badNotInstalled = "<span style='color:#D00;'>Not Installed</span>";
+        var goodTrue = "<span style='color:#0A0;'>True</span>";
+        var badTrue = "<span style='color:#D00;'>True</span>";
+        var goodFalse = "<span style='color:#0A0;'>False</span>";
+        var badFalse = "<span style='color:#D00;'>False</span>";
+
+        if(PluginDetect.getVersion('WindowsMediaPlayer')==null){var winMPEnabled = badNotInstalled;}else{var winMPEnabled = (PluginDetect.isMinVersion('WindowsMediaPlayer', '0') >= 0 ? goodInstall : badNotInstalled);};
+        var wmpe = (PluginDetect.isMinVersion('WindowsMediaPlayer', '0') >= 0 ? "Installed" : "Not Installed");
+        
+        if(!(nua.indexOf("MSIE")!=-1))
+        {
+            npa=new Array();for(i=0;i<navigator.plugins.length;i++){npa[i]=navigator.plugins[i].name;};
+            var wmvVersion;var wmvVerEmail;if(PluginDetect.isMinVersion('WindowsMediaPlayer', '0') >= 0 && npa.indexOf("Flip4Mac")!=-1){wmvVersion = "Flip4Mac <span style='color:#0A0'>Installed</span> - see details below";wmvVerEmail="Not Installed - Flip4Mac Installed to play WMV files via QuickTime";}else{wmvVersion=PluginDetect.getVersion('WindowsMediaPlayer');wmvVerEmail=PluginDetect.getVersion('WindowsMediaPlayer');};
+        }
+        else
+        {
+            var wmvVersion;var wmvVerEmail;wmvVersion=PluginDetect.getVersion('WindowsMediaPlayer');wmvVerEmail=PluginDetect.getVersion('WindowsMediaPlayer');
+        };
+        var flEnabled = (PluginDetect.isMinVersion('Flash', '0') >= 0 ? goodInstall : badNotInstalled);
+        var fle = (PluginDetect.isMinVersion('Flash', '0') >= 0 ? "Installed" : "Not Installed");
+        var qtEnabled = (PluginDetect.isMinVersion('QuickTime', '0') >= 0 ? goodInstall : badNotInstalled);
+        var qte = (PluginDetect.isMinVersion('QuickTime', '0') >= 0 ? "Installed" : "Not Installed");
+        if(PluginDetect.getVersion('QuickTime')==null && qtEnabled==goodInstall){var qtVersion = "Version is not available";}else{var qtVersion = PluginDetect.getVersion('QuickTime');};
+        var swEnabled = (PluginDetect.isMinVersion('Shockwave', '0') >= 0 ? goodInstall : badNotInstalled);
+        var swe = (PluginDetect.isMinVersion('Shockwave', '0') >= 0 ? "Installed" : "Not Installed");
+        var devalEnabled = (PluginDetect.isMinVersion('DevalVR', '0') >= 0 ? badInstall : goodNotInstalled);
+        var dvle = (PluginDetect.isMinVersion('DevalVR', '0') >= 0 ? "Installed" : "Not Installed");
+        var silverEnabled = (PluginDetect.isMinVersion('Silverlight', '0') >= 0 ? goodInstall : badNotInstalled);
+        var sle = (PluginDetect.isMinVersion('Silverlight', '0') >= 0 ? "Installed" : "Not Installed");
+        var vlcEnabled = (PluginDetect.isMinVersion('VLC', '0') >= 0 ? badInstall : goodNotInstalled);
+        var vlce = (PluginDetect.isMinVersion('VLC', '0') >= 0 ? "Installed" : "Not Installed");
+        var pdfReaderEnabled = (PluginDetect.isMinVersion('AdobeReader', '0') >= 0 ? goodInstall : badNotInstalled);
+        var pdfre = (PluginDetect.isMinVersion('AdobeReader', '0') >= 0 ? "Installed" : "Not Installed");
+        var javaIsEnabled = (navigator.javaEnabled() >= 0 ? goodTrue : badFalse);
+        var je = (navigator.javaEnabled() >= 0 ? "True" : "False");
+        var fileName;if(window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1)==""){fileName="index.html/htm/php or other extension";}else{fileName=window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1)};
+        var cookiesEnabled;if(navigator.cookieEnabled==true){cookiesEnabled="<span style='color: #0A0'>Enabled</span>";}else{cookiesEnabled="<span style='color: #D00'>Disabled</span>";};
+        var ce;if(navigator.cookieEnabled==true){ce='Enabled';}else{ce='Disabled'};
+        pageLocation = window.location.href.split("?");
+        if(pageLocation[1]!=null && pageLocation[1]!=""){sendTo = pageLocation[1].slice(2);}else{sendTo=""};
+        function systemProfile()
+        {
+            document.write("<table><tbody>");
+            document.write("<tr><td style='border-bottom:0px'><strong>Page Location:</strong></td><td style='border-bottom:0px'>&nbsp;</td></tr>");
+            document.write("<tr><td width='300'>Current Location (URL):</td><td>"+pageLocation[0]+"</td></tr>");
+            document.write("<tr><td>Path Location (URL):</td><td>"+window.location.pathname+"</td></tr>");
+            document.write("<tr><td>File Name:</td><td>"+fileName+"</td></tr>");
+            document.write("<tr><td style='border-bottom:0px'>&nbsp;</td><td style='border-bottom:0px'>&nbsp;</td></tr>");
+            document.write("<tr><td style='border-bottom:0px'><strong>System Data:</strong></td><td style='border-bottom:0px'>&nbsp;</td></tr>");
+            // >>>>>>>>>>>>>>>>>>>>>>>>>>>  IE BROWSER AND WINDOWS OS DETECTION  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            document.write("<tr><td>Operating System:</td><td>"+os+"</td></tr>");
+            document.write("<tr><td>System Platform:</td><td>"+navigator.platform+"</td></tr>");
+            document.write("<tr><td>Global IP Address:</td><td>"+ip+"</td></tr>");
+            document.write("<tr><td>Screen Resolution:</td><td>"+screen.width+" x "+screen.height+" <span style='color: #BBB'>(width x height)</span></td></tr>");
+            document.write("<tr><td>Available Resolution:</td><td>"+screen.availWidth+" x "+screen.availHeight+" <span style='color: #BBB'>(width x height)</span></td></tr>");
+            document.write("<tr><td style='border-bottom:0px'>&nbsp;</td><td style='border-bottom:0px'>&nbsp;</td></tr>");
+            document.write("<tr><td style='border-bottom:0px'><strong>Browser Data:</strong></td><td style='border-bottom:0px'>&nbsp;</td></tr>");
+            if(nua.indexOf("MSIE")!=-1)
+            {
+                document.write("<tr><td>Browser:</td><td>"+ieVersion);
+                if(cv){document.write(" <span style='font-size: 8pt; color: #999;'>(Compatibility View via "+browserVersion+")</span>");}
+                else{document.write("</td></tr>");};
+            }
+            else
+            {
+                document.write("<tr><td>Browser:</td><td>"+browserVersion+"</td></tr>");
+            }
+            // >>>>>>>>>>>>>>>>>>>>>>>>>>>  IE BROWSER AND WINDOWS OS DETECTION  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            document.write("<tr><td>Cookies:</td><td>"+cookiesEnabled+"</td></tr>");
+            document.write("<tr><td>User Data:</td><td>"+navigator.userAgent+"</td></tr>");
+            document.write("<tr><td>Browser Offset Resolution:</td><td>"+document.documentElement.offsetWidth+" x "+document.documentElement.offsetHeight+" <span style='color: #BBB'>(width x height)</span></td></tr>");
+            document.write("<tr><td>Browser Inner Resolution:</td><td>"+window.innerWidth+" x "+window.innerHeight+" <span style='color: #BBB'>(width x height)</span></td></tr>");
+            document.write("<tr><td style='border-bottom:0px'>&nbsp;</td><td style='border-bottom:0px'>&nbsp;</td></tr>");
+            document.write("<tr><td style='border-bottom:0px'><strong>Plugins:</strong></td><td style='border-bottom:0px'>&nbsp;</td></tr>");
+            document.write("<tr><td>Java Enabled:</td><td>"+javaIsEnabled+"</td></tr>");
+            document.write("<tr><td>QuickTime Plugin:</td><td>"+qtEnabled+" ("+qtVersion+")"+"</td></tr>");
+            document.write("<tr><td><a href='http://www.devalvr.com/' target='_blank' title='DevalVR is a browser plugin to view 3D interactive contents. DevalVR is a popular panoramic viewer to show QuickTimeVR files on the Internet.'>DevalVR Plugin</a>:</td><td>"+devalEnabled+" ("+PluginDetect.getVersion('DevalVR')+")"+"</td></tr>");
+            document.write("<tr><td>FlashPlayer Plugin:</td><td>"+flEnabled+" ("+PluginDetect.getVersion('Flash')+")"+"</td></tr>");
+            document.write("<tr><td>Shockwave Plugin:</td><td>"+swEnabled+" ("+PluginDetect.getVersion('Shockwave')+")"+"</td></tr>");
+            document.write("<tr><td>Windows Media Player Plugin:</td><td>"+winMPEnabled+" ("+wmvVersion+")"+"</td></tr>");
+            document.write("<tr><td>Silverlight Plugin:</td><td>"+silverEnabled+" ("+PluginDetect.getVersion('Silverlight')+")"+"</td></tr>");
+            document.write("<tr><td><a href='http://www.videolan.org/doc/vlc-user-guide/en/ch07.html' target='_blank' title='VideoLAN Client (VLC) media player is a free and open source media player and multimedia framework written by the VideoLAN project.'>VLC Plugin</a>:</td><td>"+vlcEnabled+" ("+PluginDetect.getVersion('VLC')+")"+"</td></tr>");
+            document.write("<tr><td>Adobe PDF Reader Plugin:</td><td>"+pdfReaderEnabled+" ("+PluginDetect.getVersion('AdobeReader')+")"+"</td></tr>");
+            var num_of_plugins = navigator.plugins.length;
+            if (num_of_plugins > 0){document.write("<tr><td style='border-bottom:0px'>&nbsp;</td><td style='border-bottom:0px'>&nbsp;</td></tr>");document.write("<tr><td style='border-bottom:0px'><strong>Additional Installed Plugins:</strong></td><td style='border-bottom:0px'>&nbsp;</td></tr>");};
+            for (var i=0; i < num_of_plugins; i++)
+            {
+                var list_number=i+1;
+                document.write("<tr><td width='300'>"+navigator.plugins[i].name+"</td><td>"+navigator.plugins[i].description+"</td></tr>");
+            };
+            document.write("</tbody></table>");
+            systemProfileData = '';
+            systemProfileData += '============== PAGE LOCATION ==============\n';
+            systemProfileData += 'Current Location: '+pageLocation[0]+'\n';
+            systemProfileData += '\n';
+            systemProfileData += '============== SYSTEM DATA ==============\n';
+            systemProfileData += 'Operating System: '+os+'\n';
+            systemProfileData += 'System Platform: '+navigator.platform+'\n';
+            systemProfileData += 'Global IP Address: '+ip+'\n';
+            systemProfileData += 'Screen Resolution: '+screen.width+" x "+screen.height+' (width x height)\n';
+            systemProfileData += 'Available Resolution: '+screen.availWidth+" x "+screen.availHeight+' (width x height)\n';
+            systemProfileData += '\n';
+            systemProfileData += '============== BROWSER DATA ==============\n';
+            if(nua.indexOf("MSIE")!=-1)
+            {
+                systemProfileData += 'Browser: '+ieVersion;
+                if(cv){systemProfileData += ' (Compatibility View via '+browserVersion+')\n';}
+                else{systemProfileData +='\n';};
+            }
+            else
+            {
+                systemProfileData +='Browser: '+browserVersion+'\n';
+            }
+            systemProfileData += 'Cookies: '+ce+'\n';
+            systemProfileData += 'User Data: '+navigator.userAgent+'\n';
+            systemProfileData += 'Browser Offset Resolution: '+document.documentElement.offsetWidth+" x "+document.documentElement.offsetHeight+' (width x height)\n';
+            systemProfileData += 'Browser Inner Resolution: '+window.innerWidth+" x "+window.innerHeight+' (width x height)\n';
+            systemProfileData += '\n';
+            systemProfileData += '============== PLUGINS ==============\n';
+            systemProfileData += 'Java Enabled: '+je+'\n';
+            systemProfileData += 'QuickTime Plugin: '+qtVersion+'\n';
+            systemProfileData += 'DevalVR Plugin: '+PluginDetect.getVersion("DevalVR")+'\n';
+            systemProfileData += 'FlashPlayer Plugin: '+PluginDetect.getVersion("Flash")+'\n';
+            systemProfileData += 'Shockwave Plugin: '+PluginDetect.getVersion("Shockwave")+'\n';
+            systemProfileData += 'Windows Media Player Plugin: '+wmvVerEmail+'\n';
+            systemProfileData += 'Silverlight Plugin: '+PluginDetect.getVersion("Silverlight")+'\n';
+            systemProfileData += 'VLC Plugin: '+PluginDetect.getVersion("VLC")+'\n';
+            systemProfileData += 'Adobe PDF Reader Plugin: '+PluginDetect.getVersion("AdobeReader")+'\n';
+            systemProfileData += '\n';
+            if (num_of_plugins > 0){systemProfileData += '============== ADDITIONAL INSTALLED PLUGINS ==============\n';};
+            for (var j=0; j < num_of_plugins; j++)
+            {
+                var list_number=j+1;
+                systemProfileData += navigator.plugins[j].name+'\n';
+            };/*npf;if(PluginArray.indexOf("Flip4Mac")!=-1){npf=true;}else{npf=false;};alert (npf);*/
+            //function sendData(){window.location.href = 'mailto:'+getQueryString('x')+'?subject=System Profiler Results&body='+escape(systemProfileData);};
+        };window.onload = systemProfile();
+        function sendData(){window.location.href = 'mailto:'+getQueryString('x')+'?subject=System Profiler Results&body='+escape(systemProfileData);};
+    </script>
+</head>
+<body><form name="Send Data" action="javascript:sendData()" method="post"><input type="submit" value="Send Data" tabindex="1" /></form>
+</body>
+</html>
+
